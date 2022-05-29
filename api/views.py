@@ -1,4 +1,9 @@
-from django.shortcuts import render
+from rest_framework.decorators import api_view
+from habanaforms.models import HabanaForm, HabanaFormField, HabanaFormResponse
 
 
-# Create your views here.
+@api_view(['GET'])
+def create_random_evaluation(request, pk=None):
+    if request.method == 'GET':
+        questions = HabanaFormField.objects.all().filter(stage=pk)
+

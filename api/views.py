@@ -27,7 +27,6 @@ def random_evaluation(request, pk=None):
         evaluator = request.user
 
 
-
 @api_view(['GET'])
 def get_current_user(request, pk=None):
     current_user = request.user
@@ -49,4 +48,3 @@ def get_stages_state_by_user(request, pk=None):
     for habana_form in habana_forms:
         results[habana_form.pk] = habana_form_responses.filter(habana_form_field__stage=habana_form).exists()
     return Response(results)
-    

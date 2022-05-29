@@ -32,10 +32,11 @@ class HabanaFormField(models.Model):
 
 class HabanaFormResponse(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    habana_form_response = models.ForeignKey(HabanaFormField, on_delete=models.CASCADE)
+    habana_form_field = models.ForeignKey(HabanaFormField, on_delete=models.CASCADE)
+    value = models.TextField(default=None, null=True)
 
     class Meta:
-        constraints = [models.UniqueConstraint(fields=['owner', 'habana_form_response'], name=' unique_response'),]
+        constraints = [models.UniqueConstraint(fields=['owner', 'habana_form_field'], name=' unique_response'),]
 
 
 #class Evaluation(models.Model):

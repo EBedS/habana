@@ -43,9 +43,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Third Party Apps
+    'markdownx',
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
+    
     
     # My Apps
     'users.apps.UsersConfig',

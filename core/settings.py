@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
-from datetime import datetime
+import datetime
 import os
 from pathlib import Path
 from decouple import config
@@ -158,7 +158,6 @@ REST_FRAMEWORK = {
 
 # CustomUserModel
 AUTH_USER_MODEL = 'users.UserModel'
-
 
 
 CORS_ALLOW_ALL_ORIGINS = True

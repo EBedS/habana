@@ -12,21 +12,22 @@ from api.serializers import HabanaFormSerializer, HabanaFormFieldSerializer,\
 
 
 class HabanaFormViewset(viewsets.ViewSet):
-
+    permission_classes = (IsAuthenticated, )
+    
     def list(self, request):
         queryset = HabanaForm.objects.all()
         serializer = HabanaFormSerializer(queryset, many=True)
         return Response(serializer.data)
 
     def create(self, request):
-        serializer = HabanaFormSerializer(request.data)
+        serializer = HabanaFormSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response({'message':'HabanaForm created.'})
         return Response(serializer.errors, status=status.HTTP_401_UNAUTHORIZED)
 
     def retrieve(self, request, pk=None):
-        queryset =  HabanaFormField.objects.filter(stage=pk)
+        queryset = HabanaFormField.objects.filter(stage=pk)
         serializer = HabanaFormSerializer(queryset, many=True)
         return Response(serializer.data)
     
@@ -40,15 +41,21 @@ class HabanaFormResponseViewset(viewsets.ViewSet):
     permission_classes = (IsAuthenticated, )
 
     def list(self, request):
-        queryset = HabanaForm.objects.all()
-        serializer = HabanaFormSerializer(queryset, many=True)
+        queryset = HabanaFormResponse.objects.all()
+        serializer = HabanaFormResponseSerializer(queryset, many=True)
         return Response(serializer.data)
 
     def create(self, request):
-        pass
+        serializer = HabanaFormResponseSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'message':'Response created!'})
+        return Response(serializer.errors, status=status.HTTP_401_UNAUTHORIZED)
 
     def retrieve(self, request, pk=None):
-        pass
+        queryset = HabanaFormResponse.objects.filter(stage=pk)
+        serializer = HabanaFormResponseSerializer(queryset, many=True)
+        return Response(serializer.data)
 
     def destroy(self, request, pk=None):
         pass
@@ -73,5 +80,8 @@ class UserViewset(viewsets.ViewSet):
         user = get_object_or_404(queryset, pk=pk)
         serializer = UserModelSerializer(user)
         return Response(serializer.data)
+
+    def destroy(self, request, pk=None):
+        pass
 
 

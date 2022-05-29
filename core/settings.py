@@ -159,3 +159,5 @@ AUTH_USER_MODEL = 'users.UserModel'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
+
+CORS_ALLOW_ALL_ORIGINS = True

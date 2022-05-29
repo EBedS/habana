@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure-89@833kc2+wk%o@bkyc=0dj(-+4-twjjvk9pv73fmbz&)kj^62
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-ACCESS_TOKEN_LIFETIME = datetime.timedelta(days=30)
+# ACCESS_TOKEN_LIFETIME = datetime.timedelta(days=30)
 
 # Application definition
 
@@ -161,3 +161,8 @@ AUTH_USER_MODEL = 'users.UserModel'
 
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+SIMPLE_JWT = {
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=30),
+    'ROTATE_REFRESH_TOKENS': True,
+}

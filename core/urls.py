@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework_simplejwt import views as jwt_views
-from api.views import random_evaluation, get_current_user
+from api.views import random_evaluation, get_current_user, get_stages_state_by_user
 
 
 urlpatterns = [
@@ -26,8 +26,8 @@ urlpatterns = [
     path('api/token/', jwt_views.TokenObtainPairView.as_view(), name = 'token_obtain_pair'),
     path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name ='token_refresh'),
     path('random_evaluation/', random_evaluation, name = 'random_evaluation'),
-    path('api/current_user/', get_current_user, name = 'current_user')
-
+    path('api/current_user/', get_current_user, name = 'current_user'),
+    path('api/stages_status/', get_stages_state_by_user, name = 'stages_status'),
 ]
 
 

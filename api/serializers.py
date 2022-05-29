@@ -29,13 +29,14 @@ class UserModelSerializer(ModelSerializer):
         fields = '__all__'
 
     def create(self, validated_data):
-        user = User.objects.create_user(
+        user = UserModel.objects.create_user(
             email=validated_data['email'],
             password=validated_data['password'],
             first_name=validated_data['first_name'],
             last_name=validated_data['last_name'],
             birthdate=validated_data['birthdate']
         )
+        
         return user
 
 

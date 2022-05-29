@@ -34,7 +34,7 @@ class HabanaFormResponse(models.Model):
         constraints = [models.UniqueConstraint(fields=['owner', 'habana_form_response'], name=' unique_response'),]
 
 
-class Evaluation(models.Model):
-    evaluator = models.ForeignKey(UserModel)
-    selection = models.ForeignKey(UserModel)
+# class Evaluation(models.Model):
+#     evaluator = models.ForeignKey(UserModel)
+#     selection = models.ForeignKey(UserModel)
 

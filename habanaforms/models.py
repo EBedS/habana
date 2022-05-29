@@ -29,6 +29,9 @@ class HabanaFormField(models.Model):
     stage = models.ForeignKey(HabanaForm, on_delete=models.CASCADE)
     sort_order = models.IntegerField(default=0)
 
+    def __str__(self):
+        return self.title
+
 
 class HabanaFormResponse(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

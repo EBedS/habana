@@ -1,11 +1,14 @@
+from django.shortcuts import get_object_or_404
+
 from rest_framework import viewsets
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
 from habanaforms.models import HabanaForm, HabanaFormField, HabanaFormResponse
+from users.models import UserModel
 from api.serializers import HabanaFormSerializer, HabanaFormFieldSerializer,\
-    HabanaFormResponseSerializer
+    HabanaFormResponseSerializer, UserModelSerializer
 
 
 class HabanaFormViewset(viewsets.ViewSet):
@@ -37,7 +40,9 @@ class HabanaFormResponseViewset(viewsets.ViewSet):
     permission_classes = (IsAuthenticated, )
 
     def list(self, request):
-        pass
+        queryset = HabanaForm.objects.all()
+        serializer = HabanaFormSerializer(queryset, many=True)
+        return Response(serializer.data)
 
     def create(self, request):
         pass
@@ -48,5 +53,25 @@ class HabanaFormResponseViewset(viewsets.ViewSet):
     def destroy(self, request, pk=None):
         pass
 
+
+class UserViewset(viewsets.ViewSet):
+
+    def list(self, request):
+        queryset = UserModel.objects.all()
+        serializer = UserModelSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def create(self, request):
+        serializer = UserModelSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'message':'User created!'})
+        return Response(serializer.errors, status=status.HTTP_401_UNAUTHORIZED)
+
+    def retrieve(self, request, pk=None):
+        queryset = UserModel.objects.all()
+        user = get_object_or_404(queryset, pk=pk)
+        serializer = UserModelSerializer(user)
+        return Response(serializer.data)
 
 

@@ -10,16 +10,16 @@ class HabanaFormFieldChoices(models.IntegerChoices):
 
 
 class HabanaForm(models.Model):
-    title = models.CharField(max_lenght=140)
-    description = models.CharField(max_lenght=240)
+    title = models.CharField(max_length=140)
+    description = models.CharField(max_length=240)
 
     def __str__(self):
         return self.title
 
 
 class HabanaFormField(models.Model):
-    title = models.CharField(max_lenght=140)
-    description = models.CharField(max_lenght=240)
+    title = models.CharField(max_length=140)
+    description = models.CharField(max_length=240)
     field_type = models.IntegerField(choices=HabanaFormFieldChoices.choices)
     stage = models.ForeignKey(HabanaForm, on_delete=models.CASCADE)
 
@@ -29,4 +29,4 @@ class HabanaFormResponse(models.Model):
     habana_form_response = models.ForeignKey(HabanaFormField, on_delete=models.CASCADE)
 
     class Meta:
-        constraints = models.UniqueConstraint(fields=['owner', 'habana_form_response'], name=' unique_response')
+        constraints = [models.UniqueConstraint(fields=['owner', 'habana_form_response'], name=' unique_response'),]

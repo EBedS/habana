@@ -39,3 +39,14 @@ def get_current_user(request, pk=None):
     })
 
 
+@api_view(['GET'])
+def get_stages_state_by_user(request, pk=None):
+    user = request.user
+    habana_form_responses = HabanaFormResponse.objects.filter(owner=user)
+    habana_forms = HabanaForm.objects.all()
+
+    results ={}
+    for habana_form in habana_forms:
+        results[habana_form.pk] = habana_form_responses.filter(habana_form_field__stage=habana_form).exists()
+    return Response(results)
+    

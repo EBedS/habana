@@ -12,6 +12,7 @@ djangorestframework = "*"
 whitenoise = "*"
 django-markdownx = "*"
 django-cors-headers = "*"
+djangorestframework-simplejwt = "*"
 
 [dev-packages]
 

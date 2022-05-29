@@ -1,0 +1,42 @@
+{
+    "php.validate.executablePath": "/opt/lampp/bin/php",
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
+    "[javascript]": {
+        "editor.formatOnSave": false // turn off prettier on js and scss file
+    },
+    "[scss]": {
+        "editor.formatOnSave": true
+    },
+    "[php]": {
+        "editor.formatOnSave": true
+    },
+    "[html]": {
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": true
+        }
+    },
+    "editor.detectIndentation": true,
+    "eslint.alwaysShowStatus": true,
+    "intelephense.stubs": [
+        "standard",
+        "Core",
+        "SPL",
+        "json",
+        "date",
+        "wordpress",
+    ],
+    "intelephense.references.exclude": [],
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true
+    },
+    "cSpell.language": "en,es",
+    "stylelint.enable": true
+}

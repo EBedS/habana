@@ -1,0 +1,244 @@
+@use 'sass:list';
+@use 'sass:map';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import './_tailwind-screens.scss';
+
+@function escape_leading_numbers($string) {
+    $first-char: str_slice(#{$string}, 0, 1);
+    $found: index('1' '2' '3' '4' '5' '6' '7' '8' '9' '0', $first-char);
+
+    @if $found {
+        // TODO
+        @return '\\#{$string}';
+    } @else {
+        @return $string;
+    }
+}
+
+@mixin responsive($class, $screen) {
+    $keys: map-keys($screens);
+    $screen-index: list.index($keys, $screen);
+    $screen-width: map-get($screens, $screen);
+
+    @if $screen-index {
+        @for $i from 1 through $screen-index {
+            $some-screen: nth(map-keys($screens), $i);
+
+            @media (min-width: $screen-width) {
+                .#{escape_leading_numbers($some-screen)}\:#{$class} {
+                    @content;
+                }
+            }
+        }
+    }
+
+    @media (min-width: $screen-width) {
+        .#{$class} {
+            @content;
+        }
+    }
+}
+
+.pt-form-header {
+    padding-top: 6.25rem;
+}
+
+$containers-max-width: map-get($screens, '3xl');
+
+$containers: (
+    '1': (
+        'name': 'container',
+        'padding': (
+            '0': 7.22vw,
+            'xs': 7.22vw,
+            'sm': 7.22vw,
+            'md': 7.22vw,
+            'lg': 5vw,
+            'xl': 5vw,
+            '0xl': 11vw,
+            '1xl': 11vw,
+            '2xl': 11vw,
+            '3xl': 134px,
+        ),
+    ),
+    '2': (
+        'name': 'container--big',
+        'padding': (
+            '0': 2.222vw,
+            'xs': 2.222vw,
+            'sm': 2.222vw,
+            'md': 2.222vw,
+            'lg': 2.222vw,
+            'xl': 2.222vw,
+            '0xl': 2.222vw,
+            '1xl': 2.222vw,
+            '2xl': 2.222vw,
+            '3xl': 64px,
+        ),
+    ),
+    '3': (
+        'name': 'container--small',
+        'padding': (
+            '0': 20vw,
+            'xs': 20vw,
+            'sm': 20vw,
+            'md': 20vw,
+            'lg': 20vw,
+            'xl': 20vw,
+            '0xl': 20vw,
+            '1xl': 20vw,
+            '2xl': 20vw,
+            '3xl': 294px,
+        ),
+    ),
+    '4': (
+        'name': 'container--xs',
+        'padding': (
+            '0': 26vw,
+            'xs': 26vw,
+            'sm': 26vw,
+            'md': 26vw,
+            'lg': 26vw,
+            'xl': 26vw,
+            '0xl': 26vw,
+            '1xl': 26vw,
+            '2xl': 26vw,
+            '3xl': 364px,
+        ),
+    ),
+);
+
+@mixin horizontal-containers($name, $padding) {
+    .pl-#{$name} {
+        padding-left: $padding;
+    }
+
+    .pr-#{$name} {
+        padding-right: $padding;
+    }
+
+    .px-#{$name} {
+        padding-left: $padding;
+        padding-right: $padding;
+    }
+
+    .-mx-in-#{$name} {
+        margin-left: $padding * -1;
+        margin-right: $padding * -1;
+    }
+}
+
+@function container-padding($container, $screen) {
+    @return map-get(map-get($container, 'padding'), $screen);
+}
+
+@mixin custom-container($container) {
+    $name: map-get($container, 'name');
+    $padding: container-padding($container, '0');
+
+    .#{$name} {
+        width: 100%;
+        margin-right: auto;
+        margin-left: auto;
+        padding-right: $padding;
+        padding-left: $padding;
+    }
+
+    @include horizontal-containers($name, $padding);
+
+    @for $i from 1 through length($screens) {
+        $screen: nth(map-keys($screens), $i);
+        $width: nth(map-values($screens), $i);
+
+        @media (min-width: $width) {
+            @if $width >= $containers-max-width {
+                @include responsive($name, $screen) {
+                    width: 100%;
+                    margin-right: auto;
+                    margin-left: auto;
+
+                    padding-left: container-padding($container, $screen);
+                    padding-right: container-padding($container, $screen);
+
+                    max-width: $containers-max-width;
+                }
+            } @else {
+                @include responsive($name, $screen) {
+                    width: 100%;
+                    margin-right: auto;
+                    margin-left: auto;
+
+                    padding-right: container-padding($container, $screen);
+                    padding-left: container-padding($container, $screen);
+
+                    max-width: $width;
+                }
+            }
+        }
+
+        // horizontal containers
+        @if $width >= $containers-max-width {
+            $screen-padding: calc(
+                ((100vw - $containers-max-width) / 2) +
+                    container-padding($container, $screen)
+            );
+
+            @include responsive('pl-#{$name}', $screen) {
+                padding-left: $screen-padding;
+            }
+
+            @include responsive('pr-#{$name}', $screen) {
+                padding-right: $screen-padding;
+            }
+
+            @include responsive('px-#{$name}', $screen) {
+                padding-left: $screen-padding;
+                padding-right: $screen-padding;
+            }
+
+            @include responsive('-mx-in-#{$name}', $screen) {
+                $screen-padding: calc(
+                    (
+                            ((100vw - $containers-max-width) / 2) +
+                                container-padding($container, $screen)
+                        ) * -1
+                );
+                margin-left: $screen-padding;
+                margin-right: $screen-padding;
+            }
+        } @else {
+            $screen-padding: calc(
+                (100vw - $width) / 2 + container-padding($container, $screen)
+            );
+
+            @include responsive('pl-#{$name}', $screen) {
+                padding-left: $screen-padding;
+            }
+
+            @include responsive('pr-#{$name}', $screen) {
+                padding-right: $screen-padding;
+            }
+
+            @include responsive('px-#{$name}', $screen) {
+                padding-left: $screen-padding;
+                padding-right: $screen-padding;
+            }
+
+            @include responsive('-mx-in-#{$name}', $screen) {
+                $screen-padding: calc(
+                    ((100vw - $width) / 2 + container-padding($container, $screen)) * -1
+                );
+                margin-left: $screen-padding;
+                margin-right: $screen-padding;
+            }
+        }
+    }
+}
+
+@each $key, $container in $containers {
+    @include custom-container($container);
+}

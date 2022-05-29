@@ -7,7 +7,7 @@ from users.models import UserModel
 class HabanaFormFieldChoices(models.IntegerChoices):
     TEXT = 1,"Texto"
     LONG_TEXT = 2, "Texto Largo"
-    SINGLE_CHOICE = 3,"Selección única"
+    SINGLE_CHOICE = 3, "Selección única"
     MULTIPLE_CHOICE = 4, "Selección multiple"
 
 
@@ -41,6 +41,8 @@ class HabanaFormResponse(models.Model):
     class Meta:
         constraints = [models.UniqueConstraint(fields=['owner', 'habana_form_field'], name=' unique_response'),]
 
+    def __str__(self):
+        return f'{self.owner}_{self.habana_form_field}'
 
 class Evaluation(models.Model):
     evaluator = models.ManyToManyField(UserModel, related_name='evaluator')

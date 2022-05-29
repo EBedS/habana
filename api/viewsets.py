@@ -21,7 +21,7 @@ def get_tokens_for_user(user):
     }
 
 class HabanaFormViewset(viewsets.ViewSet):
-    #permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated, )
     
     def list(self, request):
         queryset = HabanaForm.objects.all()
@@ -47,7 +47,7 @@ class HabanaFormViewset(viewsets.ViewSet):
 
 
 class HabanaFormResponseViewset(viewsets.ViewSet):
-    #permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated, )
 
     def list(self, request):
         queryset = HabanaFormResponse.objects.all()

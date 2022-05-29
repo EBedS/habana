@@ -12,7 +12,7 @@ from api.serializers import HabanaFormSerializer, HabanaFormFieldSerializer,\
 
 
 class HabanaFormViewset(viewsets.ViewSet):
-    permission_classes = (IsAuthenticated, )
+    #permission_classes = (IsAuthenticated, )
     
     def list(self, request):
         queryset = HabanaForm.objects.all()
@@ -38,7 +38,7 @@ class HabanaFormViewset(viewsets.ViewSet):
 
 
 class HabanaFormResponseViewset(viewsets.ViewSet):
-    permission_classes = (IsAuthenticated, )
+    #permission_classes = (IsAuthenticated, )
 
     def list(self, request):
         queryset = HabanaFormResponse.objects.all()
@@ -72,6 +72,7 @@ class UserViewset(viewsets.ViewSet):
         serializer = UserModelSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+            
             return Response({'message':'User created!'})
         return Response(serializer.errors, status=status.HTTP_401_UNAUTHORIZED)
 

@@ -32,3 +32,9 @@ class HabanaFormResponse(models.Model):
 
     class Meta:
         constraints = [models.UniqueConstraint(fields=['owner', 'habana_form_response'], name=' unique_response'),]
+
+
+class Evaluation(models.Model):
+    evaluator = models.ForeignKey(UserModel)
+    selection = models.ForeignKey(UserModel)
+

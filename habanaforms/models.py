@@ -14,9 +14,9 @@ class HabanaFormFieldChoices(models.IntegerChoices):
 class HabanaForm(models.Model):
     title = models.CharField(max_length=140)
     description = MarkdownxField()
-    sort_order = models.IntegerField()
-    available_from = models.DateTimeField()
-    available_until = models.DateTimeField()
+    sort_order = models.IntegerField(default=0)
+    available_from = models.DateTimeField(null=True, default=None)
+    available_until = models.DateTimeField(null=True, default=None)
 
     def __str__(self):
         return self.title
@@ -27,7 +27,7 @@ class HabanaFormField(models.Model):
     description = models.CharField(max_length=240)
     field_type = models.IntegerField(choices=HabanaFormFieldChoices.choices)
     stage = models.ForeignKey(HabanaForm, on_delete=models.CASCADE)
-    sort_order = models.IntegerField()
+    sort_order = models.IntegerField(default=0)
 
 
 class HabanaFormResponse(models.Model):

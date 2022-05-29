@@ -36,6 +36,7 @@ class UserModelSerializer(ModelSerializer):
             last_name=validated_data['last_name'],
             #birthdate=validated_data['birthdate']
         )
+        
         return user
 
 

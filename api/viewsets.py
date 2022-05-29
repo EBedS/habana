@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-
+from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework import viewsets
 from rest_framework import status
 from rest_framework.response import Response
@@ -80,10 +80,13 @@ class UserViewset(viewsets.ViewSet):
     def create(self, request):
         serializer = UserModelSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
-            user = serializer.data
-            print(user)
-            return Response({'user': user, 'token':get_tokens_for_user(user) ,'message': 'User Created!'})
+            user = serializer.save()
+            refresh = RefreshToken.for_user(user)
+            
+            return Response({
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+            })
         return Response(serializer.errors, status=status.HTTP_401_UNAUTHORIZED)
 
     def retrieve(self, request, pk=None):

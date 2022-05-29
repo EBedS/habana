@@ -10,12 +10,9 @@ def create_random_evaluation(request, pk=None):
         questions = HabanaFormField.objects.all()
         print(questions)
         return Response({'message':'Hola'})
-    
+
 
 @api_view(['GET'])
-def get_current_user(request):
-    user = request.user
-    return Response({
-        'username': user.id,
-        'email': user.email,
-    })
+def get_current_user(request, pk=None):
+    pass
+

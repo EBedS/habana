@@ -10,6 +10,15 @@ from users.models import UserModel
 from api.serializers import HabanaFormSerializer, HabanaFormFieldSerializer,\
     HabanaFormResponseSerializer, UserModelSerializer
 
+from rest_framework_simplejwt.tokens import RefreshToken
+
+def get_tokens_for_user(user):
+    refresh = RefreshToken.for_user(user)
+
+    return {
+        'refresh': str(refresh),
+        'access': str(refresh.access_token),
+    }
 
 class HabanaFormViewset(viewsets.ViewSet):
     #permission_classes = (IsAuthenticated, )
@@ -72,8 +81,9 @@ class UserViewset(viewsets.ViewSet):
         serializer = UserModelSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            
-            return Response({'message':'User created!'})
+            user = serializer.data
+            print(user)
+            return Response({'user': user, 'token':get_tokens_for_user(user) ,'message': 'User Created!'})
         return Response(serializer.errors, status=status.HTTP_401_UNAUTHORIZED)
 
     def retrieve(self, request, pk=None):

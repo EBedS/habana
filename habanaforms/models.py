@@ -1,7 +1,7 @@
 from django.db import models
 from django.conf import settings
 from markdownx.models import MarkdownxField
-
+from users.models import UserModel
 
 # Create your models here
 class HabanaFormFieldChoices(models.IntegerChoices):
@@ -34,7 +34,7 @@ class HabanaFormResponse(models.Model):
         constraints = [models.UniqueConstraint(fields=['owner', 'habana_form_response'], name=' unique_response'),]
 
 
-class Evaluation(models.Model):
-    evaluator = models.ForeignKey(UserModel)
-    selection = models.ForeignKey(UserModel)
+#class Evaluation(models.Model):
+#    evaluator = models.ForeignKey(UserModel, on_delete=models.CASCADE)
+#    selection = models.ForeignKey(UserModel, on_delete=models.CASCADE)
 

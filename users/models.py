@@ -10,3 +10,10 @@ from .model_mixins import AbstractUser
 class UserModel(AbstractUser):
     phone_no = models.CharField(max_length=100, blank=True, null=True)
     birthdate = models.DateField(blank=True, null=True)
+    is_admin = models.BooleanField(blanc=True, null=True)
+    hard_score = models.IntegerField(blanck=True, null=True)
+    soft_score = models.IntegerField(blanck=True, null=True)
+    evaluators = models.ManyToManyField(UserModel)
+
+
+

@@ -9,7 +9,6 @@ from api.serializers import HabanaFormSerializer, HabanaFormFieldSerializer,\
 
 
 class HabanaFormViewset(viewsets.ViewSet):
-    permission_classes = (IsAuthenticated,)
 
     def list(self, request):
         queryset = HabanaForm.objects.all()
@@ -32,4 +31,6 @@ class HabanaFormViewset(viewsets.ViewSet):
         habana_form = Folder.objects.filter(id=pk).first()
         habana_form.delete()
         return Response({'message':'HabanaForm Deleted.'})
+    
+
 

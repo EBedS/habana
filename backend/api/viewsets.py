@@ -21,7 +21,7 @@ def get_tokens_for_user(user):
     }
 
 class HabanaFormViewset(viewsets.ViewSet):
-    permission_classes = (IsAuthenticated, )
+    #permission_classes = (IsAuthenticated, )
     
     def list(self, request):
         queryset = HabanaForm.objects.all()
@@ -37,7 +37,7 @@ class HabanaFormViewset(viewsets.ViewSet):
 
     def retrieve(self, request, pk=None):
         queryset = HabanaFormField.objects.filter(stage=pk)
-        serializer = HabanaFormSerializer(queryset, many=True)
+        serializer = HabanaFormFieldSerializer(queryset, many=True)
         return Response(serializer.data)
     
     def destroy(self, request, pk=None):
@@ -47,7 +47,7 @@ class HabanaFormViewset(viewsets.ViewSet):
 
 
 class HabanaFormResponseViewset(viewsets.ViewSet):
-    permission_classes = (IsAuthenticated, )
+    #permission_classes = (IsAuthenticated, )
 
     def list(self, request):
         queryset = HabanaFormResponse.objects.all()
@@ -82,10 +82,11 @@ class UserViewset(viewsets.ViewSet):
         if serializer.is_valid():
             user = serializer.save()
             refresh = RefreshToken.for_user(user)
-            
+            print('Hola desde userviewset', serializer.data)
             return Response({
                 'refresh': str(refresh),
                 'access': str(refresh.access_token),
+                'user': serializer.data,
             })
         return Response(serializer.errors, status=status.HTTP_401_UNAUTHORIZED)
 

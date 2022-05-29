@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
-from datetime import datetime
+import datetime
 import os
 from pathlib import Path
 from decouple import config
@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure-89@833kc2+wk%o@bkyc=0dj(-+4-twjjvk9pv73fmbz&)kj^62
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-ACCESS_TOKEN_LIFETIME = datetime.timedelta(days=30)
+# ACCESS_TOKEN_LIFETIME = datetime.timedelta(days=30)
 
 # Application definition
 
@@ -160,5 +160,10 @@ REST_FRAMEWORK = {
 AUTH_USER_MODEL = 'users.UserModel'
 
 
-
 CORS_ALLOW_ALL_ORIGINS = True
+
+SIMPLE_JWT = {
+    'ACCESS_TOKER_LIFETIME': datetime.timedelta(days=30),
+    'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=30),
+    'ROTATE_REFRESH_TOKENS': True,
+}

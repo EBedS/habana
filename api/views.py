@@ -6,18 +6,26 @@ from habanaforms.models import HabanaForm, HabanaFormField, HabanaFormResponse
 from api.serializers import HabanaFormFieldSerializer
 
 
-@api_view(['GET'])
-def create_random_evaluation(request, pk=None):
+@api_view(['GET','POST'])
+def random_evaluation(request, pk=None):
     if request.method == 'GET':
         questions = HabanaFormField.objects.all()
         random_question = questions[random.randint(0,len(questions)-1)]
         print(random_question.id)
         responses = HabanaFormResponse.objects.all().filter(habana_form_field=random_question.id)
+        responses = [response.value for response in responses]
         print(responses)
         return Response({
-            'random_question':random_question,
-            'random_responses': HabanaFormFieldSerializer(responses),
+            'random_question': str(random_question),
+            'random_response_1': str(responses[random.randint(0,len(responses)-1)]),
+            'random_response_2': str(responses[random.randint(0,len(responses)-1)]),
+            'random_response_3': str(responses[random.randint(0,len(responses)-1)]),
+            'random_response_4': str(responses[random.randint(0,len(responses)-1)]),
             })
+    
+    if request.method == 'POST':
+        evaluator = request.user
+
 
 
 @api_view(['GET'])

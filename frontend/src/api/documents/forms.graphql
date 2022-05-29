@@ -1,0 +1,258 @@
+query dashboardForms {
+    forms {
+        id
+        uuid
+        title
+        dateForGrouping
+        school {
+            id
+            name
+        }
+    }
+}
+
+query formByIdForSubmissions($id: ID!) {
+    formById(id: $id) {
+        title
+        description
+        sections {
+            id
+            title
+            description
+            sortOrder
+            fields {
+                id
+                placeholder
+                title
+                type
+                isRequired
+                repeatableMeta {
+                    id
+                    value
+                    sortOrder
+                    type
+                    isActive
+                    enablesFreeOption
+                }
+            }
+        }
+    }
+}
+
+query formByIdForEdit($id: ID!) {
+    formById(id: $id) {
+        title
+        thanksMessage
+        description
+        persons {
+            id
+            title
+            isTheMainResponder
+        }
+        school {
+            name
+        }
+        sections {
+            id
+            title
+            description
+            sortOrder
+            fields {
+                id
+                title
+                description
+                placeholder
+                type
+                isRequired
+                sortOrder
+                represents
+                formUser {
+                    id
+                }
+                visibilityConditions {
+                    id
+                    option {
+                        id
+                    }
+                    dependsOn {
+                        id
+                    }
+                }
+                repeatableMeta {
+                    id
+                    value
+                    sortOrder
+                    type
+                    isActive
+                    enablesFreeOption
+                }
+            }
+        }
+    }
+}
+
+query formSubmissionsByFormId($id: ID!) {
+    formSubmissionsByFormId(id: $id) {
+        id
+        answer
+        responder {
+            id
+            email
+            firstName
+        }
+    }
+}
+
+query formByUuid($id: String!) {
+    formByUuid(id: $id) {
+        title
+        description
+        thanksMessage
+        multipleSubmissions
+        sections {
+            id
+            title
+            description
+            sortOrder
+            fields {
+                id
+                title
+                description
+                placeholder
+                isRequired
+                type
+                sortOrder
+                visibilityConditions {
+                    option {
+                        id
+                    }
+                    dependsOn {
+                        id
+                    }
+                    evaluationOrder
+                }
+                repeatableMeta {
+                    id
+                    value
+                    sortOrder
+                    type
+                    enablesFreeOption
+                }
+            }
+        }
+    }
+}
+
+query formById($id: ID!) {
+    formById(id: $id) {
+        title
+        description
+        school {
+            name
+        }
+        sections {
+            id
+            title
+            description
+            sortOrder
+            fields {
+                id
+                title
+                description
+                placeholder
+                isRequired
+                type
+                visibilityConditions {
+                    id
+                    option {
+                        id
+                    }
+                    dependsOn {
+                        id
+                    }
+                }
+                repeatableMeta {
+                    id
+                    value
+                    type
+                    enablesFreeOption
+                }
+            }
+        }
+    }
+}
+
+mutation duplicateForm($formId: ID!) {
+    duplicateForm(formId: $formId) {
+        newFormId
+    }
+}
+
+mutation updateForm($input: FormInput!, $deletedFields: [ID!]) {
+    updateForm(input: $input, deletedFields: $deletedFields) {
+        success
+    }
+}
+
+query formSubmissionsCount($id: ID!) {
+    formSubmissionsCount(id: $id)
+}
+
+mutation submitFormAnswer($answer: JSONString!, $form: String!) {
+    submitFormAnswer(answer: $answer, form: $form) {
+        success
+        answered
+    }
+}
+
+query formSubmissionsByFieldsIds($ids: [ID!]!) {
+    formSubmissionsByFieldsIds(ids: $ids) {
+        id
+        answeredForm {
+            id
+            title
+            school {
+                id
+                name
+            }
+            sections {
+                fields {
+                    id
+                    type
+                    repeatableMeta {
+                        id
+                        value
+                        enablesFreeOption
+                    }
+                }
+            }
+        }
+        answer
+    }
+}
+
+query formSubmissions {
+    formSubmissions {
+        id
+        answeredForm {
+            id
+            title
+            school {
+                id
+                name
+            }
+            sections {
+                fields {
+                    id
+                    type
+                    repeatableMeta {
+                        id
+                        value
+                        enablesFreeOption
+                    }
+                }
+            }
+        }
+        answer
+    }
+}

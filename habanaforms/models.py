@@ -1,5 +1,7 @@
 from django.db import models
 from django.conf import settings
+from markdownx.models import MarkdownxField
+
 
 # Create your models here
 class HabanaFormFieldChoices(models.IntegerChoices):
@@ -11,7 +13,7 @@ class HabanaFormFieldChoices(models.IntegerChoices):
 
 class HabanaForm(models.Model):
     title = models.CharField(max_length=140)
-    description = models.CharField(max_length=240)
+    description = MarkdownxField()
 
     def __str__(self):
         return self.title

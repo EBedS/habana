@@ -163,6 +163,7 @@ AUTH_USER_MODEL = 'users.UserModel'
 CORS_ALLOW_ALL_ORIGINS = True
 
 SIMPLE_JWT = {
+    'ACCESS_TOKER_LIFETIME': datetime.timedelta(days=30),
     'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=30),
     'ROTATE_REFRESH_TOKENS': True,
 }
